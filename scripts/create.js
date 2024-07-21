@@ -7,9 +7,7 @@ const kebabToCamel = (kebab) =>
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
     .join("");
 
-const createFiles = (problemNumber, kebabName) => {
-  const camelName = kebabToCamel(kebabName);
-
+const createFiles = (problemNumber, camelName) => {
   const baseDir = path.join(
     "leetcode-solutions",
     "src",
@@ -65,15 +63,29 @@ public class SolutionTest {
   writeFileSync(path.join(testDir, "SolutionTest.java"), testTemplate);
 
   console.log(
-    `Files created successfully for problem ${problemNumber} with name '${kebabName}'`
+    `Files created successfully for problem ${problemNumber} with name '${camelName}'`
   );
 };
 
-const [, , problemNumber, kebabName] = process.argv;
+if (process.argv.length === 3) {
+  const [problemNumber, ...nameParts] = process.argv[2].split(".");
+  const name = nameParts.join(".").trim();
 
-if (!problemNumber || !kebabName) {
-  console.log("Usage: node create.js <problem_number> <kebab_case_name>");
-  process.exit(1);
+  const camelCaseName = name
+    .toLowerCase()
+    .replace(/(?:^\w|[A-Z]|\b\w|\s+)/g, (match) => match.toUpperCase())
+    .replace(/\s+/g, "");
+
+  const formattedName = camelCaseName;
+
+  createFiles(problemNumber.trim(), formattedName);
+} else {
+  const [, , problemNumber, kebabName] = process.argv;
+
+  if (!problemNumber || !kebabName) {
+    console.log("Usage: node create.js <problem_number> <kebab_case_name>");
+    process.exit(1);
+  }
+
+  createFiles(problemNumber, kebabToCamel(kebabName));
 }
-
-createFiles(problemNumber, kebabName);
