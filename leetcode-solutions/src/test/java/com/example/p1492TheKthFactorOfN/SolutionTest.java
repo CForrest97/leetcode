@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class SolutionTest {
     @Test
-    public void testTwoSum() {
+    public void testSolution() {
         Solution solution = new Solution();
         assertEquals(3, solution.kthFactor(12, 3));
         assertEquals(7, solution.kthFactor(7, 2));

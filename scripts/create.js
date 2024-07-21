@@ -49,7 +49,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class SolutionTest {
     @Test
-    public void testTwoSum() {
+    public void testSolution() {
         Solution solution = new Solution();
         assertEquals(true, solution.exampleMethod(121));
     }
